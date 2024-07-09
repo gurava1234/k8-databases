@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shipping
+  namemspace: roboshop
+  labels: # these labels are deployment lables
+    app: shipping
+    project: roboshop
+    tier: app
+spec:
+  replicas: {{ .values.deployment.replicas }}
+  selector:
+    matchLabels: # these labels are used to find the pods
+      app: shipping
+      project: roboshop
+      tier: app
+  template:
+    metadata:
+      labels: # these labels are pod labels
+        app: shipping
+        project: roboshop
+        tier: app
+    spec:
+      containers:
+      - name: shipping
+        image: "guru/shipping:{{ .values.deployment.imageVersion }}"
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "128Mi"
+          limits:
+            cpu: "100m"
+            memory: "256Mi"
+         envFrom:
+         - configMapRef:
+           name: shipping
+
