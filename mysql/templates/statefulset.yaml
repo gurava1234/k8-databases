@@ -25,6 +25,8 @@ spec:
       containers:
       - name: mysql
         image: "gurava1234/mysql:{{ .value.statefulset.imageversion }}"
+        args:
+        - "--ignore-db-dir=lost+found"
         envFrom:
         - configMapRef:
             name: mysql
