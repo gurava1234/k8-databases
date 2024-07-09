@@ -1,0 +1,5 @@
+statefulset:
+  replicas: 1
+  imageversion: v1
+hpa:
+ averageUtilization: 70
