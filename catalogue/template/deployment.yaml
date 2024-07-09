@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalogue
+  namemspace: roboshop
+  labels: # these labels are deployment lables
+    app: catalogue
+    project: roboshop
+    tier: app
+spec:
+  replicas: {{ .values.deployment.replicas }}
+  selector:
+    matchLabels: # these labels are used to find the pods
+      app: catalogue
+      project: roboshop
+      tier: app
+  template:
+    metadata:
+      labels: # these labels are pod labels
+        app: catalogue
+        project: roboshop
+        tier: app
+    spec:
+      containers:
+      - name: catalogue
+        image: "guru/catalogue:{{ .values.deployment.imageVersion }}"
+        imagePullPolicy: Always
+         envFrom:
+         - configMapRef:
+           name: catalogue
+
